@@ -71,6 +71,7 @@ interface ElmApp {
         onReset: MailBox<boolean>;
         onFixMessage: MailBox<number>;
         onFixQuick: MailBox<number>;
+        onFixFileQuick: MailBox<string>;
         onLoadedContext: MailBox<Context>;
         onDependencyFiles: MailBox<DependencyFiles>;
         fileContent: MailBox<FileContent>;
