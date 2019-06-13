@@ -4,13 +4,10 @@ import Analyser.CodeBase as CodeBase exposing (CodeBase)
 import Analyser.Configuration as Configuration exposing (Configuration)
 import Analyser.ContextLoader as ContextLoader exposing (Context)
 import Analyser.DependencyLoadingStage as DependencyLoadingStage
-import Analyser.FileContext as FileContext exposing (FileContext)
 import Analyser.FileWatch as FileWatch exposing (FileChange(..))
-import Analyser.Files.FileLoader as FileLoader
 import Analyser.Files.Types exposing (LoadedSourceFile)
 import Analyser.Fixer as Fixer
 import Analyser.Fixers as Fixers
-import Analyser.Messages.Types exposing (Message)
 import Analyser.Messages.Util as Messages
 import Analyser.Modules
 import Analyser.QuickFixer as QuickFixer
@@ -23,7 +20,6 @@ import Elm.Version
 import Inspection
 import Json.Decode
 import Json.Encode exposing (Value)
-import Maybe.Extra as Maybe
 import Platform exposing (worker)
 import Registry exposing (Registry)
 import Time
@@ -51,6 +47,7 @@ type Msg
     | ReloadTick
     | Reset
     | OnFixMessage Int
+    | OnFixFileMessage String
     | OnQuickFixMessage Int
     | OnQuickFixFileMessage String
     | FixerMsg Fixer.Msg
@@ -148,6 +145,26 @@ update msg model =
             , Cmd.none
             )
                 |> handleNextStep
+
+        OnFixFileMessage path ->
+            let
+                messagesForFile =
+                    State.getMessagesForFile path model.state
+                        |> List.filter (\m -> Fixers.getFixer m /= Nothing)
+            in
+            case QuickFixer.fixAll model.configuration model.codeBase messagesForFile path of
+                Ok fixedFile ->
+                    ( model
+                    , Fixer.storeFile
+                        { file = path
+                        , newContent = fixedFile
+                        }
+                    )
+
+                Err err ->
+                    ( model
+                    , Logger.info ("Unable to fix file: " ++ path ++ ", Err: " ++ err)
+                    )
 
         OnQuickFixMessage messageId ->
             case State.getMessage messageId model.state of
@@ -472,6 +489,7 @@ subscriptions model =
             Sub.none
         , FileWatch.watcher Change
         , AnalyserPorts.onFixMessage OnFixMessage
+        , AnalyserPorts.onFixFileMessage OnFixFileMessage
         , AnalyserPorts.onFixQuick OnQuickFixMessage
         , AnalyserPorts.onFixFileQuick OnQuickFixFileMessage
         , case model.stage of

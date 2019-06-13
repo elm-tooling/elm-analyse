@@ -70,6 +70,7 @@ interface ElmApp {
         fileWatch: MailBox<FileChange>;
         onReset: MailBox<boolean>;
         onFixMessage: MailBox<number>;
+        onFixFileMessage: MailBox<string>;
         onFixQuick: MailBox<number>;
         onFixFileQuick: MailBox<string>;
         onLoadedContext: MailBox<Context>;

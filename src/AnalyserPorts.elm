@@ -1,4 +1,4 @@
-port module AnalyserPorts exposing (onFixFileQuick, onFixMessage, onFixQuick, onReset, sendFixedFile, sendReport, sendStateValue)
+port module AnalyserPorts exposing (onFixFileMessage, onFixFileQuick, onFixMessage, onFixQuick, onReset, sendFixedFile, sendReport, sendStateValue)
 
 import Analyser.Report as Report exposing (Report)
 import Analyser.State exposing (State, encodeState)
@@ -18,6 +18,9 @@ port onReset : (Bool -> msg) -> Sub msg
 
 
 port onFixMessage : (Int -> msg) -> Sub msg
+
+
+port onFixFileMessage : (String -> msg) -> Sub msg
 
 
 port onFixQuick : (Int -> msg) -> Sub msg

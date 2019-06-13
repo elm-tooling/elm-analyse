@@ -1,4 +1,4 @@
-port module Analyser.Fixer exposing (Model, Msg, init, initWithMessage, isDone, message, subscriptions, succeeded, update)
+port module Analyser.Fixer exposing (Model, Msg, init, initWithMessage, isDone, message, storeFile, subscriptions, succeeded, update)
 
 import Analyser.CodeBase as CodeBase exposing (CodeBase)
 import Analyser.FileRef exposing (FileRef)
