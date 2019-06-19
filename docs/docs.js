@@ -10423,7 +10423,7 @@ var author$project$Analyser$Checks$TriggerWords$buildMessage = function (_n0) {
 				elm$core$String$concat(
 					_List_fromArray(
 						[
-							'`' + (word + '` should not be used in comments. Found at '),
+							'`' + (word + '` should not be used in comments at '),
 							author$project$AST$Ranges$rangeToString(range)
 						])))));
 };
