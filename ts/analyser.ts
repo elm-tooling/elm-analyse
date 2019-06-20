@@ -4,6 +4,7 @@ import { Registry } from './util/dependencies';
 import * as dependencies from './util/dependencies';
 import { ElmApp, Config, Report, FileStore } from './domain';
 import Reporter from './reporter';
+import { printInPlace } from './util/logging-ports';
 
 const directory = process.cwd();
 const Elm = require('./backend-elm');
@@ -19,9 +20,19 @@ function start(config: Config, project: {}) {
 }
 
 function fix(path: string, config: Config, project: {}) {
-    startAnalyser(config, project, function onReport(app: ElmApp, _) {
-        app.ports.storeFile.subscribe((fileStore: FileStore) => {
-            console.log(`Saving file....`);
+    let initialReport: Report;
+    startAnalyser(config, project, function onReport(app: ElmApp, report: Report) {
+        if (!initialReport) {
+            initialReport = report;
+        } else {
+            let reportForFile = { ...initialReport, messages: initialReport.messages.filter(m => m.file == path) };
+            let newReportForFile = { ...report, messages: report.messages.filter(m => m.file == path) };
+            printReport(`Fix Complete for ${path}`, reportForFile, newReportForFile);
+            return;
+        }
+        app.ports.storeFile.subscribe(() => {
+            printInPlace(`Writing file: ${path}`);
+            app.ports.onReset.send(true);
         });
         app.ports.onFixFileMessage.send(path);
     });
@@ -33,30 +44,34 @@ function fixAll(config: Config, project: {}) {
         if (!initialReport) {
             initialReport = report;
         } else {
-            console.log('\n');
-            console.log('Elm Analyse - Fix All Complete');
-            console.log('------------------------------');
-            console.log(`Messages Before: ${initialReport.messages.length}`);
-            console.log(`Messages After : ${report.messages.length}`);
-            console.log(`Issues Fixed   : ${initialReport.messages.length - report.messages.length}`);
-            console.log('------------------------------');
+            printReport(`Fix Complete`, initialReport, report);
             return;
         }
 
         const files = new Set(report.messages.map(m => m.file));
         let filesLeftToSave = files.size;
         app.ports.storeFile.subscribe((fileStore: FileStore) => {
-            console.log(`Writing file ${fileStore.file}`);
+            printInPlace(`Writing file ${fileStore.file}`);
             filesLeftToSave--;
             if (filesLeftToSave === 0) {
                 app.ports.onReset.send(true);
             }
         });
         files.forEach((file: string) => {
-            console.log(`Fixing file: ${file}`);
+            printInPlace(`Fixing file: ${file}`);
             app.ports.onFixFileMessage.send(file);
         });
     });
+}
+
+function printReport(title: string, initialReport: Report, newReport: Report) {
+    console.log('\n');
+    console.log(`Elm Analyse - ${title}`);
+    console.log('------------------------------');
+    console.log(`Messages Before: ${initialReport.messages.length}`);
+    console.log(`Messages After : ${newReport.messages.length}`);
+    console.log(`Issues Fixed   : ${initialReport.messages.length - newReport.messages.length}`);
+    console.log('------------------------------');
 }
 
 function startAnalyser(config: Config, project = {}, onReport: (app: ElmApp, report: Report) => any) {
