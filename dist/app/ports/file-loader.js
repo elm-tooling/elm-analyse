@@ -9,6 +9,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = __importStar(require("fs"));
 var cp = __importStar(require("child_process"));
+var logging_ports_1 = require("../util/logging-ports");
 function setup(app, config, directory, cache, fileReader) {
     app.ports.loadFile.subscribe(function (fileName) {
         fileReader.readFile(directory, fileName, function (result) { return app.ports.fileContent.send(result); });
@@ -25,11 +26,11 @@ function setup(app, config, directory, cache, fileReader) {
                     cp.execSync(config.elmFormatPath + ' --yes ' + file.file, {
                         stdio: []
                     });
-                    console.log('Formatted file', file.file);
+                    logging_ports_1.printInPlace("Formatted file: " + file.file);
                     accept();
                 }
                 catch (e) {
-                    console.log('Could not formated file', file.file);
+                    console.log('Could not format file', file.file);
                     accept();
                 }
             });
