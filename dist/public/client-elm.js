@@ -6419,7 +6419,7 @@ var $elm$http$Http$get = F2(
 	});
 var $author$project$Client$Components$MessageList$Model = F2(
 	function (messages, active) {
-		return {aa: active, o: messages};
+		return {aa: active, l: messages};
 	});
 var $author$project$Client$Components$ActiveMessageDialog$init = $elm$core$Maybe$Nothing;
 var $author$project$Client$Components$MessageList$init = function (m) {
@@ -7169,9 +7169,9 @@ var $author$project$Client$MessagesPage$groupMessages = F2(
 				$krisajenkins$remotedata$RemoteData$map,
 				function (state) {
 					if (!m) {
-						return $author$project$Analyser$Messages$Grouped$byFileName(state.o);
+						return $author$project$Analyser$Messages$Grouped$byFileName(state.l);
 					} else {
-						return $author$project$Analyser$Messages$Grouped$byType(state.o);
+						return $author$project$Analyser$Messages$Grouped$byType(state.l);
 					}
 				},
 				s));
@@ -7180,7 +7180,7 @@ var $author$project$Client$Components$MessageList$withMessages = F2(
 	function (x, m) {
 		return _Utils_update(
 			m,
-			{o: x});
+			{l: x});
 	});
 var $author$project$Client$MessagesPage$buildMessageList = F3(
 	function (s, grouper, old) {
@@ -7868,7 +7868,7 @@ var $author$project$Client$Components$MessageList$update = F2(
 			var newMessages = function () {
 				if (!info.$) {
 					var m = info.a;
-					return A2($author$project$Analyser$Messages$Grouped$markFixed, m, model.o);
+					return A2($author$project$Analyser$Messages$Grouped$markFixed, m, model.l);
 				} else {
 					return model.l;
 				}
@@ -7876,7 +7876,7 @@ var $author$project$Client$Components$MessageList$update = F2(
 			return _Utils_Tuple2(
 				_Utils_update(
 					model,
-					{aa: newActiveDialog, o: newMessages}),
+					{aa: newActiveDialog, l: newMessages}),
 				A2($elm$core$Platform$Cmd$map, $author$project$Client$Components$MessageList$ActiveMessageDialogMsg, cmds));
 		}
 	});
@@ -8221,7 +8221,7 @@ var $author$project$Client$Routing$setRoute = F2(
 	});
 var $author$project$Analyser$State$State = F6(
 	function (messages, dependencies, idCount, status, queue, modules) {
-		return {cL: dependencies, aj: idCount, o: messages, bP: modules, X: queue, gt: status};
+		return {cL: dependencies, aj: idCount, l: messages, bP: modules, X: queue, gt: status};
 	});
 var $author$project$Analyser$Modules$Modules = F2(
 	function (projectModules, dependencies) {
@@ -11658,7 +11658,7 @@ var $author$project$ASTUtil$Inspector$Pre = function (a) {
 	return {$: 2, a: a};
 };
 var $author$project$Analyser$Checks$Variables$UsedVariableContext = $elm$core$Basics$identity;
-var $author$project$Analyser$Checks$Variables$emptyContext = {n: _List_Nil, W: _List_Nil};
+var $author$project$Analyser$Checks$Variables$emptyContext = {o: _List_Nil, W: _List_Nil};
 var $author$project$Tuple$Extra$mapFirst3 = F2(
 	function (f, _v0) {
 		var a = _v0.a;
@@ -11703,7 +11703,7 @@ var $author$project$Analyser$Checks$Variables$addUsedVariable = F2(
 		return _Utils_update(
 			context,
 			{
-				n: A2($author$project$Analyser$Checks$Variables$flagVariable, x, context.n)
+				o: A2($author$project$Analyser$Checks$Variables$flagVariable, x, context.o)
 			});
 	});
 var $author$project$ASTUtil$Variables$qualifiedNameUsedVars = F2(
@@ -11867,7 +11867,7 @@ var $author$project$Analyser$Checks$Variables$popScope = function (x) {
 	return _Utils_update(
 		x,
 		{
-			n: A2($elm$core$List$drop, 1, x.n),
+			o: A2($elm$core$List$drop, 1, x.o),
 			W: A2(
 				$elm$core$Maybe$withDefault,
 				x.W,
@@ -11877,7 +11877,7 @@ var $author$project$Analyser$Checks$Variables$popScope = function (x) {
 						var activeScope = _v0.b;
 						return $elm$core$Dict$isEmpty(activeScope) ? x.W : A2($elm$core$List$cons, activeScope, x.W);
 					},
-					$elm$core$List$head(x.n)))
+					$elm$core$List$head(x.o)))
 		});
 };
 var $author$project$Analyser$Checks$Variables$pushScope = F2(
@@ -11902,7 +11902,7 @@ var $author$project$Analyser$Checks$Variables$pushScope = F2(
 		return _Utils_update(
 			x,
 			{
-				n: A2($elm$core$List$cons, y, x.n)
+				o: A2($elm$core$List$cons, y, x.o)
 			});
 	});
 var $author$project$Analyser$Checks$Variables$onCase = F3(
@@ -12053,8 +12053,8 @@ var $author$project$Analyser$Checks$Variables$maskVariable = F2(
 		return _Utils_update(
 			context,
 			{
-				n: function () {
-					var _v0 = context.n;
+				o: function () {
+					var _v0 = context.o;
 					if (!_v0.b) {
 						return _List_Nil;
 					} else {
@@ -12077,8 +12077,8 @@ var $author$project$Analyser$Checks$Variables$unMaskVariable = F2(
 		return _Utils_update(
 			context,
 			{
-				n: function () {
-					var _v0 = context.n;
+				o: function () {
+					var _v0 = context.o;
 					if (!_v0.b) {
 						return _List_Nil;
 					} else {
@@ -12321,7 +12321,7 @@ var $author$project$Analyser$Checks$Variables$unusedTopLevels = function (_v0) {
 					A2(
 						$elm$core$Maybe$map,
 						$elm$core$Tuple$second,
-						$elm$core$List$head(x.n))))));
+						$elm$core$List$head(x.o))))));
 };
 var $author$project$Analyser$Checks$Variables$unusedVariables = function (_v0) {
 	var x = _v0;
@@ -12376,7 +12376,7 @@ var $author$project$Analyser$Checks$UnusedImportedVariable$checker = {
 			A2($author$project$Analyser$Messages$Schema$varProp, 'varName', $author$project$Analyser$Messages$Schema$schema))
 	}
 };
-var $author$project$Analyser$Checks$UnusedPatternVariable$emptyContext = {n: _List_Nil, W: _List_Nil};
+var $author$project$Analyser$Checks$UnusedPatternVariable$emptyContext = {o: _List_Nil, W: _List_Nil};
 var $author$project$Analyser$Checks$UnusedPatternVariable$filterForEffectModule = function (_v0) {
 	var k = _v0.a;
 	return !A2(
@@ -12452,14 +12452,14 @@ var $author$project$Analyser$Checks$UnusedPatternVariable$addUsedVariable = F2(
 		return _Utils_update(
 			context,
 			{
-				n: A2($author$project$Analyser$Checks$UnusedPatternVariable$flagVariable, x, context.n)
+				o: A2($author$project$Analyser$Checks$UnusedPatternVariable$flagVariable, x, context.o)
 			});
 	});
 var $author$project$Analyser$Checks$UnusedPatternVariable$popScope = function (x) {
 	return _Utils_update(
 		x,
 		{
-			n: A2($elm$core$List$drop, 1, x.n),
+			o: A2($elm$core$List$drop, 1, x.o),
 			W: A2(
 				$elm$core$Maybe$withDefault,
 				x.W,
@@ -12469,7 +12469,7 @@ var $author$project$Analyser$Checks$UnusedPatternVariable$popScope = function (x
 						var activeScope = _v0.b;
 						return $elm$core$Dict$isEmpty(activeScope) ? x.W : A2($elm$core$List$cons, activeScope, x.W);
 					},
-					$elm$core$List$head(x.n)))
+					$elm$core$List$head(x.o)))
 		});
 };
 var $author$project$Analyser$Checks$UnusedPatternVariable$pushScope = F2(
@@ -12493,7 +12493,7 @@ var $author$project$Analyser$Checks$UnusedPatternVariable$pushScope = F2(
 		return _Utils_update(
 			x,
 			{
-				n: A2($elm$core$List$cons, y, x.n)
+				o: A2($elm$core$List$cons, y, x.o)
 			});
 	});
 var $author$project$Analyser$Checks$UnusedPatternVariable$onCase = F3(
@@ -12534,8 +12534,8 @@ var $author$project$Analyser$Checks$UnusedPatternVariable$maskVariable = F2(
 		return _Utils_update(
 			context,
 			{
-				n: function () {
-					var _v0 = context.n;
+				o: function () {
+					var _v0 = context.o;
 					if (!_v0.b) {
 						return _List_Nil;
 					} else {
@@ -12558,8 +12558,8 @@ var $author$project$Analyser$Checks$UnusedPatternVariable$unMaskVariable = F2(
 		return _Utils_update(
 			context,
 			{
-				n: function () {
-					var _v0 = context.n;
+				o: function () {
+					var _v0 = context.o;
 					if (!_v0.b) {
 						return _List_Nil;
 					} else {
@@ -12715,7 +12715,7 @@ var $author$project$Analyser$Checks$UnusedPatternVariable$scan = F2(
 								A2(
 									$elm$core$Maybe$map,
 									$elm$core$Tuple$second,
-									$elm$core$List$head(x.n))))))));
+									$elm$core$List$head(x.o))))))));
 		var unusedVariables = A2(
 			$elm$core$List$filterMap,
 			function (_v1) {
@@ -15499,7 +15499,7 @@ var $author$project$Client$Components$MessageList$view = function (model) {
 		_List_Nil,
 		_List_fromArray(
 			[
-				$author$project$Analyser$Messages$Grouped$isEmpty(model.o) ? A2(
+				$author$project$Analyser$Messages$Grouped$isEmpty(model.l) ? A2(
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
@@ -15508,7 +15508,7 @@ var $author$project$Client$Components$MessageList$view = function (model) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text('No messages')
-					])) : A2($author$project$Client$Messages$viewAll, $author$project$Client$Components$MessageList$Focus, model.o),
+					])) : A2($author$project$Client$Messages$viewAll, $author$project$Client$Components$MessageList$Focus, model.l),
 				A2(
 				$elm$html$Html$map,
 				$author$project$Client$Components$MessageList$ActiveMessageDialogMsg,
@@ -15874,7 +15874,7 @@ var $author$project$Client$Dashboard$viewState = function (state) {
 									]),
 								_List_fromArray(
 									[
-										A2($author$project$Client$Dashboard$listValueWidget, 'Messages', state.o)
+										A2($author$project$Client$Dashboard$listValueWidget, 'Messages', state.l)
 									])),
 								A2(
 								$elm$html$Html$a,
