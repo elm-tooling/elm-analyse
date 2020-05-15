@@ -12101,7 +12101,7 @@ try {
 return module.exports;
 }
 /********** End of module 19: /Users/matstijl/development/repositories/github/stil4m/elm-analyse/node_modules/bufferutil/index.js **********/
-/********** Start module 20: /Users/matstijl/development/repositories/github/stil4m/elm-analyse/node_modules/bindings/bindings.js **********/
+/********** Start module 20: /Users/matstijl/development/repositories/github/stil4m/elm-analyse/node_modules/node-gyp-build/index.js **********/
 __modules[20] = function(module, exports) {
 
 /**
@@ -12378,7 +12378,7 @@ module.exports = { mask, unmask };
 
 return module.exports;
 }
-/********** End of module 22: /Users/matstijl/development/repositories/github/stil4m/elm-analyse/node_modules/bufferutil/fallback.js **********/
+/********** End of module 23: /Users/matstijl/development/repositories/github/stil4m/elm-analyse/node_modules/bufferutil/fallback.js **********/
 /********** Footer **********/
 if(typeof module === "object")
 	module.exports = __require(0);
